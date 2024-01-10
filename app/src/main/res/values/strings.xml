@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">testuas</string>
+    <string name="app_name">Projek Akhir</string>
+    <string name="lgn">Login</string>
+    <string name="lgot">LogOut</string>
+    <string name="sbmt">Submit</string>
+    <string name="cncl">Cancel</string>
+    <string name="mnroom">Room4</string>
+    <string name="mdroom">Room8</string>
+    <string name="lgroom">Room30</string>
+    <string name="lc">Dengan LC</string>
+    <string name="lcId">ID LC</string>
+    <string name="lcname">Nama LC</string>
+    <string name="namaPelanggan">Nama Penyewa</string>
+    <string name="tanggalSewa">Tanggal Sewa</string>
+    <string name="durasiSewaJam">Durasi</string>
+    <string name="hargaTotal">Harga Total</string>
+</resources>
