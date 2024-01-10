@@ -9,7 +9,7 @@
     <string name="mdroom">Room8</string>
     <string name="lgroom">Room30</string>
     <string name="lc">Dengan LC</string>
-    <string name="lcId">ID LC</string>
+    <string name="lcid">ID LC</string>
     <string name="lcname">Nama LC</string>
     <string name="namaPelanggan">Nama Penyewa</string>
     <string name="tanggalSewa">Tanggal Sewa</string>

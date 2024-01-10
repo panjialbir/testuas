@@ -5,6 +5,7 @@ import com.example.testuas.data.LC
 import com.example.testuas.data.OrderRoom
 import com.example.testuas.data.OrderRoomDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class OrderRoomViewModel(private val orderRoomDao: OrderRoomDao) : ViewModel() {
@@ -13,13 +14,14 @@ class OrderRoomViewModel(private val orderRoomDao: OrderRoomDao) : ViewModel() {
 
     suspend fun insertOrder(order: OrderRoom) {
         withContext(Dispatchers.IO) {
-            orderRoomDao.insertOrder(order)
+            orderRoomDao.tambahPenyewaan(order)
+
         }
     }
 
-    suspend fun getAllOrders(): List<OrderRoom> {
+    suspend fun getAllOrders(): Flow<List<OrderRoom>> {
         return withContext(Dispatchers.IO) {
-            orderRoomDao.getAllOrders()
+            orderRoomDao.getAllOrder()
         }
     }
 
@@ -29,7 +31,7 @@ class OrderRoomViewModel(private val orderRoomDao: OrderRoomDao) : ViewModel() {
         }
     }
 
-    suspend fun getAllLC(): List<LC> {
+    suspend fun getAllLC(): Flow<List<LC>> {
         return withContext(Dispatchers.IO) {
             orderRoomDao.getAllLC()
         }

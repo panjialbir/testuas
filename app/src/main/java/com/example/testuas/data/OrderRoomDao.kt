@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface OrderRoomDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun tambahPenyewaan(orderRoom: OrderRoom)
-    suspend fun insertLC(lc: LC)
+
 
     @Update
     suspend fun update(orderRoom: OrderRoom)
@@ -21,11 +21,21 @@ interface OrderRoomDao {
     @Delete
     suspend fun delete(orderRoom: OrderRoom)
 
-    @Query("SELECT * from  WHERE id = :id")
+    @Query("SELECT * from penyewaan_karaoke WHERE id = :id")
     fun getOrder(id: Int): Flow<OrderRoom>
 
     @Query("SELECT * from penyewaan_karaoke ORDER BY namaPelanggan ASC")
     fun getAllOrder() : Flow<List<OrderRoom>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertLC(lc: LC)
+
+    @Query("SELECT * from table_lc ORDER BY lcname ASC") // Ganti someField dengan nama field yang sesuai di LC
+    fun getAllLC(): Flow<List<LC>>
+
+    // Fungsi tambahan untuk mendapatkan LC berdasarkan ID
+    @Query("SELECT * from table_lc WHERE lcid = :id")
+    fun getLC(id: Int): Flow<LC>
 
 }
 
