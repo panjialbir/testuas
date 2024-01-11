@@ -27,15 +27,7 @@ interface OrderRoomDao {
     @Query("SELECT * from penyewaan_karaoke ORDER BY namaPelanggan ASC")
     fun getAllOrder() : Flow<List<OrderRoom>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertLC(lc: LC)
-
-    @Query("SELECT * from table_lc ORDER BY lcname ASC") // Ganti someField dengan nama field yang sesuai di LC
-    fun getAllLC(): Flow<List<LC>>
-
-    // Fungsi tambahan untuk mendapatkan LC berdasarkan ID
-    @Query("SELECT * from table_lc WHERE lcid = :id")
-    fun getLC(id: Int): Flow<LC>
+   
 
 }
 

@@ -1,41 +1,72 @@
 package com.example.testuas.model
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.testuas.data.LC
 import com.example.testuas.data.OrderRoom
 import com.example.testuas.data.OrderRoomDao
+import com.example.testuas.repository.OfflineRepositoryOrder
+import com.example.testuas.repository.RepositoryOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class OrderRoomViewModel(private val orderRoomDao: OrderRoomDao) : ViewModel() {
+class OrderRoomViewModel(private val repositoryOrder: OfflineRepositoryOrder): ViewModel() {
+    var uiStateOrderRoom by mutableStateOf(UIStateOrderRoom())
+        private set
 
-    // Implementasikan metode-metode ViewModel sesuai kebutuhan Anda
-
-    suspend fun insertOrder(order: OrderRoom) {
-        withContext(Dispatchers.IO) {
-            orderRoomDao.tambahPenyewaan(order)
-
+    private fun validateInput(uiState: DetailOrderRoom = uiStateOrderRoom.detailOrderRoom): Boolean {
+        return with(uiState) {
+            namaPelanggan.isNotBlank() && tanggalSewa.isNotBlank() && durasiSewaJam > 0
         }
     }
 
-    suspend fun getAllOrders(): Flow<List<OrderRoom>> {
-        return withContext(Dispatchers.IO) {
-            orderRoomDao.getAllOrder()
-        }
+    fun updateUiState(detailOrderRoom: DetailOrderRoom) {
+        uiStateOrderRoom =
+            UIStateOrderRoom(detailOrderRoom = detailOrderRoom, isEntryValid = validateInput(detailOrderRoom))
     }
 
-    suspend fun insertLC(lc: LC) {
-        withContext(Dispatchers.IO) {
-            orderRoomDao.insertLC(lc)
+    suspend fun saveOrderRoom() {
+        if (validateInput()) {
+            repositoryOrder.insertOrder(uiStateOrderRoom.detailOrderRoom.toOrderRoom())
         }
     }
-
-    suspend fun getAllLC(): Flow<List<LC>> {
-        return withContext(Dispatchers.IO) {
-            orderRoomDao.getAllLC()
-        }
-    }
-
-    // ... tambahkan metode lainnya sesuai kebutuhan
 }
+
+data class UIStateOrderRoom(
+    val detailOrderRoom: DetailOrderRoom = DetailOrderRoom(),
+    val isEntryValid: Boolean = false
+)
+
+data class DetailOrderRoom(
+    val id: Long = 0,
+    val namaPelanggan: String = "",
+    val tanggalSewa: String = "",
+    val durasiSewaJam: Int = 0,
+    val hargaTotal: Double = 0.0
+)
+
+fun DetailOrderRoom.toOrderRoom(): OrderRoom = OrderRoom(
+    id = id,
+    namaPelanggan = namaPelanggan,
+    tanggalSewa = tanggalSewa,
+    durasiSewaJam = durasiSewaJam,
+    hargaTotal = hargaTotal
+)
+
+fun OrderRoom.toDetailOrderRoom(): DetailOrderRoom = DetailOrderRoom(
+    id = id,
+    namaPelanggan = namaPelanggan,
+    tanggalSewa = tanggalSewa,
+    durasiSewaJam = durasiSewaJam,
+    hargaTotal = hargaTotal
+)
+
+fun OrderRoom.toUiStateOrderRoom(isEntryValid: Boolean = false): UIStateOrderRoom = UIStateOrderRoom(
+    detailOrderRoom = this.toDetailOrderRoom(),
+    isEntryValid = isEntryValid
+)

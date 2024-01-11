@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 @Database(entities = [OrderRoom::class], version = 1, exportSchema = false)
 
 abstract class DatabaseOrder : RoomDatabase() {
-    abstract fun OrderRoomDao() : OrderRoomDao
+    abstract fun orderRoomDao() : OrderRoomDao
 
     companion object {
         @Volatile
