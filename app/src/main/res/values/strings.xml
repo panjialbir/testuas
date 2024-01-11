@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">testuas</string>
-    <string name="app_name">Projek Akhir</string>
+    <string name="ordernow">Order</string>
+
     <string name="lgn">Login</string>
     <string name="lgot">LogOut</string>
     <string name="sbmt">Submit</string>
@@ -15,4 +16,6 @@
     <string name="tanggalSewa">Tanggal Sewa</string>
     <string name="durasiSewaJam">Durasi</string>
     <string name="hargaTotal">Harga Total</string>
+    <string name="btn_submit_order_room" />
+    <string name="add_lc">\n</string>
 </resources>
